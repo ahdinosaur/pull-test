@@ -1,8 +1,18 @@
-const test = require('tape')
+const pull = require('pull-stream')
+const test = require('../')
 
-const pullTest = require('../')
+const tests = [
+  {
+    name: 'pull-test',
+    test: function (assert, cb) {
+      assert.ok(test, 'module is require-able')
+      cb()
+    }
+  }
+]
 
-describe('pull-test', function(t) {
-  t.ok(pullTest, 'module is require-able')
-  t.end()
-})
+pull(
+  pull.values(tests),
+  test(),
+  pull.log()
+)

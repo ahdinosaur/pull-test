@@ -8,7 +8,7 @@ module.exports = Tester
 function Tester (options) {
   return asyncMap(function (testObject, cb) {
     const test = testObject.test
-    const title = testObject.title
+    const name = testObject.name
     const start = Date.now()
 
     const errors = []
@@ -20,7 +20,7 @@ function Tester (options) {
       const duration = Date.now() - start
 
       cb(null, {
-        title,
+        name,
         duration,
         errors
       })

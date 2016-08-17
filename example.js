@@ -3,21 +3,21 @@ const test = require('./')
 
 const tests = [
   {
-    title: 'it works!',
+    name: 'it works!',
     test: function (assert, cb) {
       assert(true)
       cb()
     }
   },
   {
-    title: 'it fails!',
+    name: 'it fails!',
     test: function (assert, cb) {
       assert(false)
       cb()
     }
   },
   {
-    title: 'it errors!',
+    name: 'it errors!',
     test: function (assert, cb) {
       cb(new Error('error'))
     }

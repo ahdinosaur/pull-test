@@ -1,14 +1,70 @@
 # pull-test
 
-run assertion tests using pull streams
+run assertion tests using [pull streams](https://pull-stream.github.io/)
 
 ```shell
-npm install --save pull-test
+npm install --save-dev pull-test
+```
+
+## example
+
+```js
+const pull = require('pull-stream')
+const test = require('pull-test')
+
+const tests = [
+  {
+    name: 'it works!',
+    test: function (assert, cb) {
+      assert(true)
+      cb()
+    }
+  },
+  {
+    name: 'it fails!',
+    test: function (assert, cb) {
+      assert(false)
+      cb()
+    }
+  },
+  {
+    name: 'it errors!',
+    test: function (assert, cb) {
+      cb(new Error('error'))
+    }
+  }
+]
+
+pull(
+  pull.values(tests),
+  test(),
+  pull.drain(function (result) {
+    console.log('test result', result)
+  }, function (err) {
+    console.log('test ended')
+    if (err) console.error(err)
+  })
+)
 ```
 
 ## usage
 
-### `pullTest = require('pull-test')`
+### `test = require('pull-test')`
+
+### `through = test(options)`
+
+returns a through [pull stream](https://pull-stream.github.io/),
+
+which expects to receive test objects with shape:
+
+- `name`: name of the test
+- `test`: function which receives `(assert, cb)`. assert is the same as the [node core `assert` module](https://nodejs.org/api/assert.html) and automatically collects errors. `cb` is to be called when the test is done, or _the test runner has errored_ (it will close the stream with the error).
+
+and will return test result objects with shape:
+
+- `name`: name of test
+- `errors`: array of errors from running test
+- `duration`: number of microseconds that test took to run
 
 ## license
 
