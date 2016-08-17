@@ -1,6 +1,6 @@
 {
   "name": "pull-test",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "run assertion tests using pull streams",
   "main": "index.js",
   "scripts": {
