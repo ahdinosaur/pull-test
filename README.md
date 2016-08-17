@@ -9,9 +9,8 @@ npm install --save-dev pull-test
 ## example
 
 ```js
-const test = require('./')
-
-const tests = {
+// example.js
+module.exports = {
   ['it succeeds']: function (assert) {
     assert(true)
   },
@@ -22,21 +21,24 @@ const tests = {
     cb(new Error('error'))
   }
 }
+```
 
-test(tests)
-// ✔ it succeeds
-// ✖ it fails!
-// { AssertionError: false == true
-//    at tests (pull-test/example.js:9:5)
-//  name: 'AssertionError',
-//  actual: false,
-//  expected: true,
-//  operator: '==',
-//  message: 'false == true',
-//  generatedMessage: true }
-// ▲ test runner ended with an error
-// Error: error
-//    at tests (pull-test/example.js:12:8)
+`pull-test example.js`
+
+```txt
+✔ it succeeds
+✖ it fails!
+{ AssertionError: false == true
+   at tests (pull-test/example.js:9:5)
+ name: 'AssertionError',
+ actual: false,
+ expected: true,
+ operator: '==',
+ message: 'false == true',
+ generatedMessage: true }
+▲ test runner ended with an error
+Error: error
+   at tests (pull-test/example.js:12:8)
 ```
 
 ## cli
