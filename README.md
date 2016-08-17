@@ -39,7 +39,13 @@ test(tests)
 //    at tests (pull-test/example.js:12:8)
 ```
 
-## usage
+## cli
+
+```
+pull-test test/*.js
+```
+
+## api
 
 ### `test = require('pull-test')`
 
