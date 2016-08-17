@@ -63,7 +63,7 @@ which expects to receive test objects with shape:
 and will return test result objects with shape:
 
 - `name`: name of test
-- `errors`: array of errors from running test
+- `assertions`: array of assertions results from running test. either `true` if assertion passed or an instance of `assert.AssertionError` if assertion failed.
 - `duration`: number of microseconds that test took to run
 
 ## license
