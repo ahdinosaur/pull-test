@@ -1,36 +1,16 @@
 const pull = require('pull-stream')
 const test = require('./')
 
-const tests = [
-  {
-    name: 'it works!',
-    test: function (assert, cb) {
-      assert(true)
-      cb()
-    }
+const tests = {
+  ['it succeeds']: function (assert) {
+    assert(true)
   },
-  {
-    name: 'it fails!',
-    test: function (assert, cb) {
-      assert(false)
-      cb()
-    }
+  ['it fails!']: function (assert) {
+    assert(false)
   },
-  {
-    name: 'it errors!',
-    test: function (assert, cb) {
-      cb(new Error('error'))
-    }
+  ['it errors!']: function (assert, cb) {
+    cb(new Error('error'))
   }
-]
+}
 
-pull(
-  pull.values(tests),
-  test.Tester(),
-  pull.drain(function (result) {
-    console.log('test result', result)
-  }, function (err) {
-    console.log('test ended')
-    if (err) console.error(err)
-  })
-)
+test(tests)

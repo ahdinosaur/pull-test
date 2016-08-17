@@ -11,8 +11,4 @@ const tests = [
   }
 ]
 
-pull(
-  pull.values(tests),
-  test.Tester(),
-  pull.log()
-)
+test(tests)

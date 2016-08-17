@@ -9,67 +9,76 @@ npm install --save-dev pull-test
 ## example
 
 ```js
-const pull = require('pull-stream')
-const test = require('pull-test')
+const test = require('./')
 
-const tests = [
-  {
-    name: 'it works!',
-    test: function (assert, cb) {
-      assert(true)
-      cb()
-    }
+const tests = {
+  ['it succeeds']: function (assert) {
+    assert(true)
   },
-  {
-    name: 'it fails!',
-    test: function (assert, cb) {
-      assert(false)
-      cb()
-    }
+  ['it fails!']: function (assert) {
+    assert(false)
   },
-  {
-    name: 'it errors!',
-    test: function (assert, cb) {
-      cb(new Error('error'))
-    }
+  ['it errors!']: function (assert, cb) {
+    cb(new Error('error'))
   }
-]
+}
 
-pull(
-  pull.values(tests),
-  test.Tester(),
-  pull.drain(function (result) {
-    console.log('test result', result)
-  }, function (err) {
-    console.log('test ended')
-    if (err) console.error(err)
-  })
-)
-// test result { name: 'it works!', duration: 1, assertions: [ true ] }
-// test result { name: 'it fails!',
-//  duration: 1,
-//  assertions: 
-//   [ { AssertionError: false == true
-//         at tests.test (pull-test/example.js:15:7)
-//         ...
-//       name: 'AssertionError',
-//       actual: false,
-//       expected: true,
-//       operator: '==',
-//       message: 'false == true',
-//       generatedMessage: true } ] }
-// test ended
+test(tests)
+// ✔ it succeeds
+// ✖ it fails!
+// { AssertionError: false == true
+//    at tests (pull-test/example.js:9:5)
+//  name: 'AssertionError',
+//  actual: false,
+//  expected: true,
+//  operator: '==',
+//  message: 'false == true',
+//  generatedMessage: true }
+// ▲ test runner ended with an error
 // Error: error
-//    at tests.test (pull-test/example.js:22:10)
+//    at tests (pull-test/example.js:12:8)
 ```
 
 ## usage
 
 ### `test = require('pull-test')`
 
+### `test(tests)`
+
+runs tests using built-in [`assert`](https://nodejs.org/api/assert.html) and default reporter.
+
+### `testSource = test.from(tests)`
+
+creates a source [pull stream](https://pull-stream.github.io/) of test objects,
+
+from any of the following format of tests:
+
+```js
+function testTheThing (assert, cb) {
+  assert(true), cb()
+}
+```
+
+```js
+{
+  ['test the thing']: function (assert, cb) {
+    assert(true), cb()
+  }
+}
+```
+
+```js
+[{
+  name: 'test the thing',
+  test: function (assert, cb) {
+    assert(true), cb()
+  }
+}]
+```
+
 ### `through = test.Tester(options)`
 
-returns a through [pull stream](https://pull-stream.github.io/),
+creates a through [pull stream](https://pull-stream.github.io/),
 
 which expects to receive test objects with shape:
 
@@ -81,6 +90,12 @@ and will return test result objects with shape:
 - `name`: name of test
 - `assertions`: array of assertions results from running test. either `true` if assertion passed or an instance of `assert.AssertionError` if assertion failed.
 - `duration`: number of microseconds that test took to run
+
+### `sink = test.Reporter(options)`
+
+creates a sink [pull stream](https://pull-stream.github.io/),
+
+which receives test result objects and logs to the console.
 
 ## license
 
