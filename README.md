@@ -45,6 +45,22 @@ pull(
     if (err) console.error(err)
   })
 )
+// test result { name: 'it works!', duration: 1, assertions: [ true ] }
+// test result { name: 'it fails!',
+//  duration: 1,
+//  assertions: 
+//   [ { AssertionError: false == true
+//         at tests.test (pull-test/example.js:15:7)
+//         ...
+//       name: 'AssertionError',
+//       actual: false,
+//       expected: true,
+//       operator: '==',
+//       message: 'false == true',
+//       generatedMessage: true } ] }
+// test ended
+// Error: error
+//    at tests.test (pull-test/example.js:22:10)
 ```
 
 ## usage
