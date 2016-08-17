@@ -12,15 +12,18 @@ module.exports.Tester = Tester
 module.exports.Reporter = Reporter
 
 function Test (test, options) {
+  if (arguments.length === 1) {
+    options = test
+  }
   options = defined(options, {})
   options = Object.assign(options, {
     assert: defined(options.assert, coreAssert)
   })
 
   pull(
-    from(test),
-    Tester(options),
-    Reporter(options)
+    defined(options.source, from(test)),
+    defined(options.tester, Tester(options)),
+    defined(options.reporter, Reporter(options))
   )
 }
 

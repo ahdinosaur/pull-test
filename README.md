@@ -41,6 +41,10 @@ test(tests)
 
 ## cli
 
+if `test/*.js` represents a set of files exporting tests,
+
+runs these tests using built-in [`assert`](https://nodejs.org/api/assert.html) and default reporter with:
+
 ```
 pull-test test/*.js
 ```

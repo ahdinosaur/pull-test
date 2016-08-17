@@ -1,21 +1,28 @@
 #!/usr/bin/env node
 
 const Path = require('path')
+const cat = require('pull-cat')
 
-module.exports = cli
+const Test = require('./')
+
+module.exports = Cli
 
 if (!module.parent) {
-  cli({
+  Cli({
     cwd: process.cwd(),
     paths: process.argv.slice(2)
   })
 }
 
-function cli (options) {
+function Cli (options) {
   const cwd = options.cwd
   const paths = options.paths
 
-  paths.forEach(function (path) {
-    require(Path.resolve(cwd, path))
+  Test({
+    source: cat(paths.map(function (path) {
+      const resolvedPath = Path.resolve(cwd, path)
+      const test = require(resolvedPath)
+      return Test.from(test)
+    }))
   })
 }

@@ -1,14 +1,11 @@
 const pull = require('pull-stream')
 const test = require('../')
 
-const tests = [
+module.exports = [
   {
     name: 'pull-test',
-    test: function (assert, cb) {
-      assert.ok(test, 'module is require-able')
-      cb()
+    test: function (assert) {
+      assert(test)
     }
   }
 ]
-
-test(tests)
