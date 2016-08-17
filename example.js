@@ -26,7 +26,7 @@ const tests = [
 
 pull(
   pull.values(tests),
-  test(),
+  test.Tester(),
   pull.drain(function (result) {
     console.log('test result', result)
   }, function (err) {

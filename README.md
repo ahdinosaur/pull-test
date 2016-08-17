@@ -37,7 +37,7 @@ const tests = [
 
 pull(
   pull.values(tests),
-  test(),
+  test.Tester(),
   pull.drain(function (result) {
     console.log('test result', result)
   }, function (err) {
@@ -67,7 +67,7 @@ pull(
 
 ### `test = require('pull-test')`
 
-### `through = test(options)`
+### `through = test.Tester(options)`
 
 returns a through [pull stream](https://pull-stream.github.io/),
 

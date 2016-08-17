@@ -1,1 +1,3 @@
-module.exports = require('./lib/tester')
+var exports = module.exports = {}
+
+exports.Tester = require('./lib/tester')

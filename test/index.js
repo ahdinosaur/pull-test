@@ -13,6 +13,6 @@ const tests = [
 
 pull(
   pull.values(tests),
-  test(),
+  test.Tester(),
   pull.log()
 )
